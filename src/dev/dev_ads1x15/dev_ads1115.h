@@ -62,7 +62,7 @@ enum
     @enum ADS1115_CH3 Channel 3
     @n
  */
-enum
+enum adcChnEnum
 {
     ADS1115_CH0 = 0,
     ADS1115_CH1,
@@ -80,7 +80,7 @@ enum
     @enum ADS1115_GAIN_0256 Max. input voltage 0.256V
     @n
  */
-enum
+enum gainEnum
 {
     ADS1115_GAIN_6114 = 0,
     ADS1115_GAIN_4096,
@@ -144,6 +144,8 @@ static inline bool dev_ads1115_read(i2c_inst_t* i2c, uint8_t addr, uint8_t chann
 {
     return dev_ads1115_read_ex(i2c, addr, channel, channel + ADS1115_AI0_GND, gain, value);
 }
+
+bool dev_ads1115_reset(i2c_inst_t* i2c, uint8_t addr);
 
 #ifdef __cplusplus
  }

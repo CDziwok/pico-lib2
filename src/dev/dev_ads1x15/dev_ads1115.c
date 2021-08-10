@@ -11,6 +11,17 @@
 #define POINTER_CONVERT 0
 #define POINTER_CONFIG  1
 
+bool dev_ads1115_reset(i2c_inst_t* i2c, uint8_t addr) {
+    if ((i2c == NULL)) return false;
+    //reset
+    if (sys_i2c_wbyte_reg(i2c,addr,0x0, 0x6)!=2) return false;
+    sys_delay_ms(10);
+    // // pwr-up
+    // if (sys_i2c_wbyte_reg(i2c,addr,0x0, 0x9)!=2) return false;
+    // sys_delay_ms(10);
+    return true;
+}
+
 bool dev_ads1115_read_ex(i2c_inst_t* i2c, uint8_t addr, uint8_t channel, uint8_t mux, uint8_t gain, double *value)
 {
     // check parameter
@@ -46,7 +57,7 @@ bool dev_ads1115_read_ex(i2c_inst_t* i2c, uint8_t addr, uint8_t channel, uint8_t
     // start conversion
     if (sys_i2c_wword_reg(i2c, addr, POINTER_CONFIG, sys_swap_word(ads1115_cfg.cfg)) != 3)
         return false;
-    
+
     // wait for finish conversion
     sys_delay_ms(10);
 

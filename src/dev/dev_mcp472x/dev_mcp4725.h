@@ -34,12 +34,13 @@
 #include "sys_i2c.h"
 
 /*! MCP4725 IC2 address:
-    @enum MCP4725_ADDR0 I2C address (0x61) A0 to GND or open
-    @enum MCP4725_ADDR1 I2C address (0x62) A0 to VDD
+    @enum MCP4725_ADDR0 I2C address (0x60) A0 to GND or open
+    @enum MCP4725_ADDR1 I2C address (0x61) A0 to VDD
     @n
  */
-#define MCP4725_ADDR0 0x61
-#define MCP4725_ADDR1 0x62
+
+#define MCP4725_ADDR0 0x66// 0x61
+#define MCP4725_ADDR1 0x67// 0x62
 
 /*! MCP4725 Power Down:
     @enum MCP4725_PD_OFF Power down off
@@ -82,6 +83,11 @@ bool dev_mcp4725_set(i2c_inst_t* i2c, uint8_t addr, uint16_t value);
     @return[error] false
 */
 bool dev_mcp4725_save(i2c_inst_t* i2c, uint8_t addr, uint16_t value);
+
+static bool mcp4725_write(i2c_inst_t* i2c, uint8_t cmd, uint8_t addr, uint16_t value);
+
+bool dev_mcp4725_reset(i2c_inst_t* i2c, uint8_t addr);
+bool dev_mcp4725_powerup(i2c_inst_t* i2c, uint8_t addr);
 
 #ifdef __cplusplus
  }
