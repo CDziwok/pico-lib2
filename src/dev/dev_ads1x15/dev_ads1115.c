@@ -92,7 +92,8 @@ bool dev_ads1115_read_ex(i2c_inst_t* i2c, uint8_t addr, uint8_t channel, uint8_t
     }
 
     // convert to volt 
-    *value = round(*value)/1000.0;
+    // *value = round(*value)/1000.0;
+
 
     return true;
 }

@@ -36,6 +36,8 @@
 
 #include "sys_i2c.h"
 
+#include <math.h>
+
 /*! $## **Constants:**
     @--
 */
@@ -142,7 +144,15 @@ bool dev_ads1115_read_ex(i2c_inst_t* i2c, uint8_t addr, uint8_t channel, uint8_t
 */
 static inline bool dev_ads1115_read(i2c_inst_t* i2c, uint8_t addr, uint8_t channel, uint8_t gain, double *value)
 {
-    return dev_ads1115_read_ex(i2c, addr, channel, channel + ADS1115_AI0_GND, gain, value);
+    bool suc = dev_ads1115_read_ex(i2c, addr, channel, channel + ADS1115_AI0_GND, gain, value);
+    *value = (*value)/1000.0;
+    return suc;
+}
+static inline bool dev_ads1115_read_rounded(i2c_inst_t* i2c, uint8_t addr, uint8_t channel, uint8_t gain, double *value)
+{
+    bool suc = dev_ads1115_read_ex(i2c, addr, channel, channel + ADS1115_AI0_GND, gain, value);
+    *value = round(*value)/1000.0;
+    return suc;
 }
 
 bool dev_ads1115_reset(i2c_inst_t* i2c, uint8_t addr);
